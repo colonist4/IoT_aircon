@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/common.css">
+  <script src="js/common.js"></script>
+</head>
+
+<body class="h-100">
+  <div class="container-fluid h-100 d-flex">
+    <div class="card align-self-center m-auto shadow">
+      <div class="card-header text-center p-3">
+
+        <i class="fas fa-user" style="font-size:3rem"></i>
+
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">비밀번호</span>
+            </div>
+            <input type="password" class="form-control" id="pw">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" onclick="login();">제출</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <template id="alert">
+    <div class="alert">
+      <strong>Hi!!!</strong>
+    </div>
+  </template>
+  <div class="blocker" id="loader" hidden>
+    <div style="display:table-cell; vertical-align:middle">
+      <div class="loader">
+      </div>
+    </div>
+  </div>
+</body>
+<script src="js/login.js"></script>
+
+</html>

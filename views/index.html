@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/progressbar.min.js"></script>
+    <script src="js/Chart.bundle.min.js"></script>
+    <script src="js/common.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+        <div class="container justify-content-start" >
+            <a class="navbar-brand" href="./index.html"><i class="fas fa-home"></i></a>
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">설정</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="updateGraph()">새로고침 <i class="fas fa-sync"></i></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="navbar-item align-content-center d-flex" id="loginWrapper" >
+                        <form class="form-inline" name="login">
+                            <input class="form-control-sm mr-2" type="password" placeholder="PW" name="pw">
+                            <button class="btn btn-primary btn-sm">로그인</button>
+                        </form>
+                    </li>
+                    <li class="nav-item" id="logoutWrapper">
+                        <a class="nav-link" href="#" id="logoutBtn"><span></span><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="margin-top:80px">
+        <div class="card mb-3 shadow" style="min-height:50vh">
+            <div class="card-header">
+                <strong class="text-info" style=" font-size:1.1rem">최근 온도 그래프</strong>
+            </div>
+            <div class="card-body p-2">
+                <canvas id="graph"></canvas>
+            </div>
+        </div>
+        <div class="card-columns">
+            <div class="card shadow bg-light">
+<!--
+                <div class="card-header">
+
+                </div>
+-->
+                <div id="temperature-progressbar" class="card-body" >
+
+                </div>
+                <div class="card-footer text-center p-2">
+                    <strong style="font-size:1.1rem" class="text-info">현재 온도</strong>
+                </div>
+            </div>
+            <div class="card shadow bg-light">
+<!--
+                <div class="card-header">
+
+                </div>
+-->
+                <div id="humidity-progressbar" class="card-body" >
+
+                </div>
+                <div class="card-footer text-center p-2">
+                    <strong style="font-size:1.1rem" class="text-info">현재 습도</strong>
+                </div>
+            </div>
+            <div class="card shadow">
+                <div class="d-flex card-body justify-content-between">
+                    <div class="btn-group-vertical">
+                        <button type="button" class="btn btn-outline-danger" onclick="remoteControl('changeTemperature', {change:'up'})"><i class="fas fa-chevron-up"></i></button>
+                        <button type="button" class="btn btn-outline-dark disabled">
+                        <span><strong id="temperature">20</strong></span></button>
+                        <button type="button" class="btn btn-outline-primary" onclick="remoteControl('changeTemperature', {change:'down'})"><i class="fas fa-chevron-down"></i></button>
+                    </div>
+                    <div class="btn-group-vertical" id="mode">
+                        <button type="button" class="btn btn-outline-info active" value="냉방" onclick="remoteControl('changeMode', this)"><strong>냉방</strong></button>
+                        <button type="button" class="btn btn-outline-success" value="자동" onclick="remoteControl('changeMode', this)"><strong>자동</strong></button>
+                        <button type="button" class="btn btn-outline-secondary" value="제습" onclick="remoteControl('changeMode', this)"><strong>제습</strong></button>
+                    </div>
+                    <div class="btn-group-vertical" id="speed">
+                        <button type="button" class="btn btn-outline-primary active" value="강" onclick="remoteControl('changeSpeed', this)"><strong>강</strong></button>
+                        <button type="button" class="btn btn-outline-info" value="중" onclick="remoteControl('changeSpeed', this)"><strong>중</strong></button>
+                        <button type="button" class="btn btn-outline-secondary" value="약" onclick="remoteControl('changeSpeed', this)"><strong>약</strong></button>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <button type="button" class="btn btn-primary btn-block mb-2" onclick="remoteControl('submit')"><strong>신호 전송</strong></button>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-info flex-fill mr-1" onclick="remoteControl('power', 'on')"><strong>전원 켜기</strong></button>
+                      <button type="button" class="btn btn-danger flex-fill ml-1" onclick="remoteControl('power', 'off')"><strong>전원 끄기</strong></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow bg-light">
+                <div class="card-header">
+
+                </div>
+                <div class="card-body text-center p-2">
+                  <img id="image" class="img-fluid"/>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <template id="alert">
+      <div class="alert">
+        <strong>Hi!!!</strong>
+      </div>
+    </template>
+    <div class="blocker" id="loader" hidden>
+      <div style="display:table-cell; vertical-align:middle">
+        <div class="loader">
+        </div>
+      </div>
+    </div>
+
+</body>
+<script src="js/index.js"></script>
+</html>
